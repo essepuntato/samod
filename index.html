@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="./rash.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      prefix="schema: http://schema.org/ prism: http://prismstandard.org/namespaces/basic/2.0/">
+   <head>
+      <meta charset="UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <link rel="stylesheet" href="css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="css/rash.css"/>
+      <script src="js/jquery.min.js"> </script>
+      <script src="js/bootstrap.min.js"> </script>
+      <script src="js/rash.js"> </script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+      <title>SAMOD: an agile methodology for the development of ontologies</title>
+      <meta about="#affiliation-1"
+            property="schema:name"
+            content="Digital And Semantic Publishing Laboratory, Department of Computer Science and Engineering, University of Bologna, Bologna, Italy"/>
+      <meta about="#author-1"
+            name="dc.creator"
+            property="schema:name"
+            content="Silvio Peroni"/>
+      <meta about="#author-1"
+            property="schema:email"
+            content="silvio.peroni@unibo.it"/>
+      <link about="#author-1"
+            property="schema:affiliation"
+            href="#affiliation-1"/>
+      <meta property="prism:keyword"
+            content="Agile Ontology Development Methodology"/>
+      <meta property="prism:keyword" content="Test-Driven Development"/>
+      <meta property="prism:keyword" content="OWL Ontologies"/>
+      <meta property="prism:keyword" content="SAMOD"/>
+      <meta property="prism:keyword" content="Ontology Engineering"/>
+      <meta property="prism:keyword" content="Knowledge Engineering"/>
+      <meta property="prism:keyword" content="Conceptual Modelling"/>
+   </head>
+   <body>
+      <section role="doc-abstract">
+         <h1>Abstract</h1>
+         <p>In this paper we introduce <em>SAMOD</em>, a.k.a. <em>Simplified Agile Methodology for Ontology Development</em>, a novel agile methodology for the development of ontologies by means of small steps of an iterative workflow that focuses on creating well-developed and documented models starting from exemplar domain descriptions.</p>
+         <p>
+            <strong>How to cite this paper:</strong> Peroni, S. (2016). SAMOD: an agile methodology for the development of ontologies. figshare. http://dx.doi.org/...</p>
+      </section>
+      <section id="__RefHeading__2452_1461357291">
+         <h1>Introduction</h1>
+         <p>Developing ontologies is not a straightforward operation. In fact, this assumption is implicitly demonstrated by the number of ontology development processes that have been developed in last 30 years, that have their roots in the knowledge and software engineering domains. Moreover, the choice of the right development process to follow is a delicate task, since it may vary according to a large amount of variables, such as the intrinsic complexity of domain to be modelled, the context in which the model will be used (enterprise, social community, high-profile academic/industrial project, private needs, etc.), the amount of time available for the development, and the technological hostility and the feeling of unfruitfulness shown by the final customers against both the model developed and the process adopted for the development.</p>
+         <p>In the past twenty years, the software engineering domain has seen the proposal of new <em>agile</em> methodologies for software development, in contrast with <em>highly-disciplined</em> processes that have characterised such discipline from its beginning. Following this trend, recently agile development methodologies have been proposed in the field of ontology engineering as well. In fact, several quick-and-iterative ontology development processes have been introduced, e.g., <a href="#__RefNumPara__5811_1461357291"> </a>, which could be preferred when the ontology to develop should be composed by a limited amount of ontological entities – while the use of highly-structured and strongly-founded methodologies remain valid and, maybe, mandatory to solve and model incredibly complex enterprise projects. Moreover, one of the most important advantages when using agile approaches for developing ontologies is that they usually tend to decrease to the necessary the interaction between ontology developers/engineers and domain experts/customers.</p>
+         <p>Of course, the above reasons are not the only ones that motivate developers to prefer a particular methodology rather than others. The intended usage of the ontology to develop must be taken into account as well. Usually, this intended usage lies between the following extremes:</p>
+         <ol>
+            <li>
+               <p>on the one hand, reclaimed from artificial intelligent fields, the underground logic behind classes and relations represents the real value of an ontology;</p>
+            </li>
+            <li>
+               <p>on the other hand, considering database-like applications, ontologies are used for defining and then describing a general structure to organise and retrieve Web data – or, more generally, just <em>data</em>.</p>
+            </li>
+         </ol>
+         <p>Differently from the first years of the Semantic Web era, in which a lot of research in the field concerned AI-like applications, recently the interest about (big and linked) data has grown and is still growing, particularly by means of <a href="http://dbpedia.org/">DBPedia</a>, the <a href="http://esw.w3.org/SweoIG/TaskForces/CommunityProjects/LinkingOpenData">Linking Open Data Community Project</a> and other collateral projects such as <a href="http://www.data.gov/">data.gov</a> and <a href="http://data.gov.uk/">data.gov.uk</a>.</p>
+         <p>Recent applications are now using well-known (and even simple) ontologies to understand and organise these kinds of data. At the same time, new ontologies are built every day for the same purpose. Data are becoming the real object of discourse, while the formal semantics behind ontologies is thus relegated to a secondary role.</p>
+         <p>Taking into consideration (even exemplar or <em>ad hoc</em>) data during the development is a fundamental feature of an ontology engineering process and should be a prerequisite of each methodology. Data must be intrinsically and explicitly presented as one of the most important part of the methodology itself.</p>
+         <p>Mainly, the reasons for being <em>data-centric</em> when developing an ontology are:</p>
+         <ul>
+            <li>
+               <p>
+                  <em>avoid inconsistencies</em> – a common mistake when developing a model is to make a TBox that is consistent if considered alone and that becomes inconsistent when we define an ABox for it, even if all the classes and properties are completely satisfiable. Using real-world data, as exemplar of a particular scenario of the domain we are modelling, can definitely avoid this problem;</p>
+            </li>
+            <li>
+               <p>
+                  <em>self-explanatory and easy-understandable models</em> – trying to implement a particular real-world and significative scenario related to a model by using data allows one to better understand if each TBox entity has a meaningful name that fits for describing clearly the intent and the usage of the entity itself. This makes users understanding a model without spending a lot of effort for reading any comment or documentation. The use of data as part of the ontology development obliges ontology engineers and developers to think about the possible ways users will understand and use the ontology they are developing, in particular the very first time they look at it;</p>
+            </li>
+            <li>
+               <p>
+                  <em>examples of usage</em> – producing data within the development process means to have a bunch of exemplars that describe the usage of the model in real-world scenarios. This kind of documentation, implicitly, allows users to apply a learn-by-example approach <a href="#__RefNumPara__2359_1461357291"> </a> in understanding the model and during their <em>initial skill acquisition</em> phase.</p>
+            </li>
+         </ul>
+         <p>In this paper we introduce <em>SAMOD</em> (<em>Simplified Agile Methodology for Ontology Development</em>), a novel agile methodology, inspired to <a href="#__RefNumPara__2367_1461357291"> </a>, for the development of ontologies. The methodology is organised in small steps within an iterative process that focuses on creating well-developed and documented models by using significative exemplar of data so as to produce ontologies that are always ready-to-be-used and easily-understandable by humans (i.e., the possible customers) without spending a lot of effort. Described with details in the following sections, SAMOD is the result of our dedication to the development of ontologies in the past eight years. While the first draft of the methodology has been proposed in 2010 as starting point for the development of the Semantic Publishing and Referencing Ontologies, it has been revised several times so as to come to the current version presented in this paper.</p>
+      </section>
+      <section>
+         <h1>Preliminaries</h1>
+         <p>A preliminary introduction to the terminology we use in SAMOD may be very helpful for the reader. In particular, it is useful to clarify the meaning of some terms that occur quite often within the SAMOD process we will introduce in <a href="#__RefHeading__2377_1461357291"> </a>.</p>
+         <section>
+            <h1>People involved</h1>
+            <p>The kinds of people involved in SAMOD are domain experts and ontology engineers.</p>
+            <p>A <em>domain expert</em>, or <em>DE</em>, is a professional with expertise in the domain to be described by the ontology. However, usually she does not have any technical knowledge in languages or tools necessary for the developing the ontology. She is mainly responsible to define, often in natural language, a detailed description of domain that has to be modelled.</p>
+            <p>An <em>ontology engineer</em>, or <em>OE</em>, is a person who, starting from an informal and precise description of a particular problem or domain provided by DEs, construct meaningful and useful ontologies by using a particular formal language, such as OWL 2 <a href="#__RefNumPara__3275_1461357291"> </a>.</p>
+         </section>
+         <section>
+            <h1>Terms</h1>
+            <p>In this section we introduce all the terms that will be used in describing our methodology.</p>
+            <p>A <em>motivating scenario</em> 
+               <a href="#__RefNumPara__2389_1461357291"> </a> is a small story problem that provides a short description and a set of informal and intuitive examples to the problem it talks about. Usually, it implicitly bring with it an informal and intended semantics hidden behind natural language descriptions. In our methodology, a motivation scenario is composed by:</p>
+            <ul>
+               <li>
+                  <p>a <em>name</em> that characterises it;</p>
+               </li>
+               <li>
+                  <p>a natural language <em>description</em> that presents a problem to address;</p>
+               </li>
+               <li>
+                  <p>one or more <em>examples</em> according to the description.</p>
+               </li>
+            </ul>
+            <p>An <em>informal competency question</em> 
+               <a href="#__RefNumPara__2389_1461357291"> </a> is a natural language question that represents an informal requirement within a particular domain. Usually, in order to address all the requirements of the domain in consideration, a set of more than one competency question is needed. In this case, the set must be organised hierarchically: we will have higher-level competency questions that require answers to other much lower-level questions. In our methodology, each informal competency question is composed by:</p>
+            <ul>
+               <li>
+                  <p>an unique <em>identifier</em>;</p>
+               </li>
+               <li>
+                  <p>a natural language <em>question</em>;</p>
+               </li>
+               <li>
+                  <p>the kind of <em>outcome</em> expected as answer;</p>
+               </li>
+               <li>
+                  <p>some <em>exemplar answers</em> considering the examples provided in the related motivating scenario<a href="#ftn5"> </a>;</p>
+               </li>
+               <li>
+                  <p>a list of identifiers referring to higher-level informal competency questions <em>requiring</em> this one, if any.</p>
+               </li>
+            </ul>
+            <p>A <em>glossary of terms</em> 
+               <a href="#__RefNumPara__2434_1461357291"> </a>
+               <em> </em>is a list of term-definition pairs related to terms that are commonly used for talking about the domain in consideration. The term in each pair may be composed by one or more words or verbs, or even by a brief sentence, while the related definition is a natural language explanation of the meaning of such term. The terminology used for naming terms and for describing them must be as close as possible to the domain language.</p>
+            <p>As anticipated in <a href="#__RefHeading__2452_1461357291"> </a>, our methodology prescribes an iterative process which aims to build the final model through a series of small steps. At the end of each iteration a particular preliminary version of the final model is released. Within a particular iteration i<sub>n</sub>, the <em>current model</em> is the version of the final model released at the end of the iteration i<sub>n-1</sub>.</p>
+            <p>A <em>modelet</em> is a stand-alone model describing a particular domain. By definition, a modelet does not include entities from other models and it is not included in other models.</p>
+            <p>A <em>test case</em> T<sub>n</sub>, produced in the n<sup>th</sup> iteration of the process, is a sextuple <em>(MS, CQ, GoT, TBox, ABox, SQ)</em> where:</p>
+            <ul>
+               <li>
+                  <p>
+                     <em>MS</em> is a motivating scenario;</p>
+               </li>
+               <li>
+                  <p>
+                     <em>CQ</em> is a list of scenario-related informal competency questions;</p>
+               </li>
+               <li>
+                  <p>
+                     <em>GoT</em> a glossary of terms for the domain addressed by the motivating scenario;</p>
+               </li>
+               <li>
+                  <p>
+                     <em>TBox</em> is a formal model written in a proper language, such as OWL 2, implementing the description introduced in the motivating scenario;</p>
+               </li>
+               <li>
+                  <p>
+                     <em>ABox</em> an exemplar dataset written in a proper language, such as OWL 2, implementing all the examples described in the motivating scenario according to the TBox;</p>
+               </li>
+               <li>
+                  <p>
+                     <em>SQ</em> a set of queries written in a formal language, such as SPARQL 1.1 <a href="#__RefNumPara__2508_1461357291"> </a>, formalising the informal competency questions.</p>
+               </li>
+            </ul>
+            <p>A <em>bag of test cases</em> (<em>BoT</em>) is a set of test cases.</p>
+            <p>Given as input a motivating scenario, the model formalising it and the related glossary of terms – a <em>model test</em> aims at checking the validity of the model against <em>formal</em> and <em>rhetorical</em> requirements, where:</p>
+            <ul>
+               <li>
+                  <p>checking for formal requirements means understanding whether the model is consistent and, if needed, whether it also complies with appropriate unit tests <a href="#__RefNumPara__2550_1461357291"> </a>;</p>
+               </li>
+               <li>
+                  <p>checking for rhetorical requirements means understanding whether the model covers the related motivating scenario and whether the vocabulary used by the model is appropriate.</p>
+               </li>
+            </ul>
+            <p>Given as input a motivating scenario, the model (TBox) formalising it and a dataset (ABox) built according to the model, and considering the examples described in the motivating scenario, a <em>data test</em> aims at checking the validity of the model and the dataset and against <em>formal</em> and <em>rhetorical</em> requirements, where:</p>
+            <ul>
+               <li>
+                  <p>checking for formal requirements means understanding whether the model (TBox) is still consistent when considering the exemplar dataset (ABox);</p>
+               </li>
+               <li>
+                  <p>checking for rhetorical requirements means understanding whether the dataset completely describes all the examples accompanying the motivating scenario, and whether the model is enough self-explanatory to be used quickly by humans for building datasets without spending a lot of effort in understanding it.</p>
+               </li>
+            </ul>
+            <p>Given as input a model (TBox), a related dataset (ABox), a set of informal competency questions, and a set formal queries written in SPARQL, each mapping a particular informal competency question, a <em>query test</em> aims at checking the validity of the model, the dataset and each SPARQL query against <em>formal</em> and <em>rhetorical</em> requirements, where:</p>
+            <ul>
+               <li>
+                  <p>checking for formal requirements means understanding whether each SPARQL query is well-formed and can correctly run on the TBox+ABox;</p>
+               </li>
+               <li>
+                  <p>checking for rhetorical requirements means understanding whether each informal competency question is mapped into an appropriate SPARQL query and whether, running each of them upon the TBox+ABox, the result conforms to the expected outcome of each informal competency question and in the ABox.</p>
+               </li>
+            </ul>
+         </section>
+      </section>
+      <section id="__RefHeading__2377_1461357291">
+         <h1>Methodology</h1>
+         <p>SAMOD is based on the following three iterative steps (briefly summarised in <a href="#refIllustration1"> </a>) – where each step ends with the release of a snapshot of the current state of the process called <em>milestone</em>:</p>
+         <ol>
+            <li>
+               <p>OEs collect all the information about a specific domain, with the help of DEs, in order to build a modelet formalising the domain in consideration, following certain ontology development principles, and then create a new test case that includes the modelet. If everything works fine (i.e., all model, data and query test are passed) release a milestone and proceed;</p>
+            </li>
+            <li>
+               <p>OEs merge the modelet of the new test case with the current model produced by the end of the last process iteration, and consequently update all the test cases in BoT specifying the new current model as <em>TBox</em>. If everything works fine (i.e., all model, data and query test are passed according to their formal requirements only) release a milestone and proceed;</p>
+            </li>
+            <li>
+               <p>OEs refactor the current model, in particular focussing on the last part added in the previous step, taking into account good practices for ontology development processes. If everything works fine (i.e., all model, data and query test are passed) release a milestone. In case there is another motivating scenario to be addressed, iterate the process, otherwise stop.</p>
+            </li>
+         </ol>
+         <figure id="refIllustration1">
+            <p>
+               <img src="img/10000201000008180000044441F74BCB.png"
+                    alt="A brief summary of SAMOD, starting with the &#34;Collect requirements and develop a modelet&#34; step."/>
+            </p>
+            <figcaption>A brief summary of SAMOD, starting with the "Collect requirements and develop a modelet" step.</figcaption>
+         </figure>
+         <p>The next sections elaborate on those steps introducing a real example<a href="#ftn6"> </a> considering a generic iteration i<sub>n</sub>.</p>
+         <section>
+            <h1>Define a new test case</h1>
+            <p>OEs and DEs work together to write down a motivating scenario MS<sub>n</sub>, being as close as possible to the language DEs commonly use for talking about the domain. An example of motivating scenario is illustrated in <a href="#refTable0"> </a>.</p>
+            <figure id="refTable0">
+               <table>
+                  <tr>
+                     <th>Name</th>
+                     <td>
+                        <p>Vagueness of the TBox entities of an ontology</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Description</th>
+                     <td>
+                        <p>Vagueness is a common human knowledge and language phenomenon, typically manifested by terms and concepts like High, Expert, Bad, Near etc.</p>
+                        <p>In an OWL ontology vagueness may appear in the definitions of classes, properties, datatypes and individuals. For these entities a more explicit description of the nature and characteristics of their vagueness/non-vagueness is required.</p>
+                        <p>Analysing and describing the nature of vagueness/non-vagueness in ontological entities is subjective activity, since it is often a personal interpretation of someone (a person or, more generally, an agent).</p>
+                        <p>Vagueness can be described according to at least two complementary types referring to quantitative or qualitative connotations respectively. The quantitative aspect of vagueness concerns the (real or apparent) lack of precise boundaries defining an entity along one or more specific dimensions. The qualitative aspect of vagueness concerns the identification of such other discriminants of which boundaries are not quantifiable in any precise way.</p>
+                        <p>Either a vagueness description, that specifies always a type, or a non-vagueness description provides at least a justification (defined either as natural language text, an entity or a more complex logic formula, or any combination of them) that motivates a specific aspect of why an entity should be intended as vague/non-vague. Multiple justifications are possible for the same description.</p>
+                        <p>The annotation of an entity with information about its vagueness is a particular act of tagging done by someone (i.e., an agent) who associates a description of vagueness/non-vagueness (called the body of the annotation) to the entity in consideration (called the target of the annotation).</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Example 1</th>
+                     <td>
+                        <p>Silvio Peroni thinks that the class TallPerson is vague since there is no way to define a crisp height threshold that may separate tall from non-tall people.</p>
+                        <p>Panos Alexopoulos, on the other hand, considers someone as tall when his/her height is at least 190cm. Thus, for Panos, the class TallPerson is not vague.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Example 2</th>
+                     <td>
+                        <p>In an company ontology, the class StrategicClient is considered vague. However, the company's R&amp;D Director believes that for a client to be classified as strategic, the amount of its R&amp;D budget should be the only factor to be considered. Thus according to him/her the vague class StrategicClient has quantitative vagueness and the dimension is the amount of R&amp;D budget.</p>
+                        <p>On the other hand, the Operations Manager believes that a client is strategic when he has a long-term commitment to the company. In other words, the vague class StrategicClient has quantitative vagueness and the dimension is the duration of the contract.</p>
+                        <p>Finally, the company's CEO thinks that StrategicClient is vague from a qualitative point of view. In particular, although there are several criteria one may consider necessary for being expert (e.g. a long-standing relation, high project budgets, etc), it's not possible to determine which of these are sufficient.</p>
+                     </td>
+                  </tr>
+               </table>
+               <figcaption>An example of motivating scenario.</figcaption>
+            </figure>
+            <p>Given a motivating scenario, OEs and DEs should produce a set of informal competency questions CQ<sub>n</sub>, each of them identified appropriately. An example of an informal competency question, formulated starting from the motivating scenario in <a href="#refTable0"> </a>, is illustrated in <a href="#refTable1"> </a>.</p>
+            <figure id="refTable1">
+               <table>
+                  <tr>
+                     <th>Identifier</th>
+                     <td>
+                        <p>3</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Question</th>
+                     <td>
+                        <p>What are all the entities that are characterised by a specific vagueness type?</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Outcome</th>
+                     <td>
+                        <p>The list of all the pairs of entity and vagueness type.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Example</th>
+                     <td>
+                        <p>StrategicClient, quantitative</p>
+                        <p>StrategicClient, qualitative</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Depends on</th>
+                     <td>
+                        <p>1</p>
+                     </td>
+                  </tr>
+               </table>
+               <figcaption>An example of competency question. All the tokens inside square brackets refers to names of other competency questions.</figcaption>
+            </figure>
+            <p>Now, having both a motivating scenario and a list of informal competency questions, KEs and DEs write down a glossary of terms GoT<sub>n</sub>. An example of glossary of terms is illustrated in <a href="#refTable2"> </a>.</p>
+            <figure id="refTable2">
+               <table>
+                  <tr>
+                     <th>Term</th>
+                     <th>Definition</th>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>annotation of vagueness/non-vagueness</p>
+                     </td>
+                     <td>
+                        <p>The annotation of an ontological entity with information about its vagueness is a particular act of tagging done by someone (i.e., an agent) who associates a description of vagueness/non-vagueness (called the body of the annotation) to the entity in consideration (called the target of the annotation).</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>agent </p>
+                     </td>
+                     <td>
+                        <p>The agent who tags an ontology entity with a vagueness/non-vagueness description.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>description of non-vagueness</p>
+                     </td>
+                     <td>
+                        <p>The descriptive characterisation of non-vagueness to associate to an ontological entity by means of an annotation. It provides at least one justification for considering the target ontological entity non-vague. This description is primarily meant to be used for entities that would typically be considered vague but which, for some reason, in the particular ontology are not.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>description of vagueness</p>
+                     </td>
+                     <td>
+                        <p>The descriptive characterisation of vagueness to associate to an ontological entity by means of an annotation. It specifies a vagueness type and provides at least one justification for considering the target ontological entity vague.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>vagueness type</p>
+                     </td>
+                     <td>
+                        <p>A particular kind of vagueness that characterises the entity.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>quantitative vagueness</p>
+                     </td>
+                     <td>
+                        <p>A vagueness type that concerns the (real or apparent) lack of precise boundaries defining an entity along one or more specific dimensions.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>qualitative vagueness</p>
+                     </td>
+                     <td>
+                        <p>A vagueness type that concerns the identification of such other discriminants of which boundaries are not quantifiable in any precise way.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>justification for vagueness/non-vagueness description</p>
+                     </td>
+                     <td>
+                        <p>A justification that explains one possible reason behind a vagueness/non-vagueness description. It is defined either as natural language text, an entity, a more complex logic formula, or any combination of them.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>has natural language text</p>
+                     </td>
+                     <td>
+                        <p>The natural language text defining the body of a justification.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>has entity</p>
+                     </td>
+                     <td>
+                        <p>The entity defining the body of a justification.</p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>has logic formula</p>
+                     </td>
+                     <td>
+                        <p>The logic formula defining the body of a justification.</p>
+                     </td>
+                  </tr>
+               </table>
+               <figcaption>An example of glossary of terms.</figcaption>
+            </figure>
+            <p>The remaining part of this step is led by OEs only<a href="#ftn1"> </a>, who are responsible of developing a modelet according to the motivating scenario, the informal competency questions and the glossary of terms<a href="#ftn0"> </a>.</p>
+            <p>In doing that work, they must strictly follow the following principles:</p>
+            <ul>
+               <li>
+                  <p>
+                     <strong>Keep it small.</strong> Keeping the number of developed ontology entities small is essential when developing an ontology. In fact, by making small changes (and retesting frequently, as our framework prescribes), one always has a good idea of what change has caused an error in the model <a href="#__RefNumPara__2367_1461357291"> </a>. Moreover, according to Miller <a href="#__RefNumPara__2760_1461357291"> </a>, averagely OE<sub>m</sub> cannot hold in working memory more than a small number of object. Thus, OE<sub>m</sub> should define at most <em>N</em> classes, <em>N</em> individuals, <em>N</em> attributes (i.e., data properties) and <em>N</em> relations (i.e., object properties), where <em>N</em> is the Miller's magic number <q>7 ± 2</q>.</p>
+               </li>
+               <li>
+                  <p>
+                     <strong>Use patterns.</strong> In thinking what is the best way to model a particular aspect of the domain, OE<sub>m</sub> should take into consideration existing knowledge. In particular, we strongly encourage to look at documented patterns – the <a href="http://www.w3.org/2001/sw/BestPractices/OEP/">Semantic Web Best Practices and Deployment Working Group page</a> and the <a href="http://www.ontologydesignpatterns.org/">Ontology Design Patterns portal</a>
+                     <em> </em>are both valuable examples – and at widely-adopted Semantic Web vocabularies – such as <a href="http://xmlns.com/foaf/spec">FOAF</a> for people, <a href="http://rdfs.org/sioc/spec">SIOC</a> for social communities, and so on.</p>
+               </li>
+               <li>
+                  <p>
+                     <strong>Middle-out development.</strong> Defining firstly the most relevant concepts (the <em>basic concepts</em>) and latterly adding the most abstract and most concrete ones, the middle-out approach <a href="#__RefNumPara__2884_1461357291"> </a> allows one to avoid unnecessary effort during the development because detail arises only as necessary, by adding sub- and super-classes to the basic concepts. Moreover, this approach, if used properly, tends to produce much more stable ontologies, as stated in <a href="#__RefNumPara__2389_1461357291"> </a>.</p>
+               </li>
+               <li>
+                  <p>
+                     <strong>Keep it simple.</strong> The modelet must be designed according to the information obtained previously (motivating scenario, informal competency questions, glossary of terms) in an as quick as possible way, spending the minimum effort and without adding any unnecessary semantic structure. In particular, do not think about inference at this stage, while think about describing the motivating scenario fully.</p>
+               </li>
+               <li>
+                  <p>
+                     <strong>Self-explanatory entities.</strong> The aim of each ontological entity must be understandable by humans simply looking at its local name (i.e., the last part of the entity IRI). Therefore, no labels and comments have to be added at this stage and all the entity IRIs must not be opaque. In particular, class local names has to be capitalised (e.g., <em>Justification</em>) and in camel-case notation if composed by more than one word (e.g., <em>DescriptionOfVagueness</em>). Property local names has to be non-capitalised and in camel-case notation if composed by more than one word; moreover, <a href="http://www.jenitennison.com/blog/node/128">each property local name must start with a verb</a> (e.g., <em>wasAttributedTo</em>) and, in case of data properties, it has to be followed by the name of the object referred (e.g., <em>hasNaturalLanguageText</em>). Individual local names must be non-capitalised (e.g., <em>ceo</em>) and dash-separated if composed by more than one word (<em>quantitative-vagueness</em>).</p>
+               </li>
+            </ul>
+            <p>The goal of OE<sub>m</sub> is to develop a modelet<sub>n</sub>, eventually starting from a graphical representation written in a proper visual language, such as UML <a href="#__RefNumPara__2974_1461357291"> </a>, E/R model <a href="#__RefNumPara__3022_1461357291"> </a> and Graffoo <a href="#__RefNumPara__3115_1461357291"> </a>, so as to convert it automatically in OWL by means of appropriate tools, e.g., DiTTO <a href="#__RefNumPara__8514_1461357291"> </a>.</p>
+            <p>Starting from the OWL version modelet<sub>n</sub>, OEs proceed in four phases:</p>
+            <ol>
+               <li>
+                  <p>run a model test on modelet<sub>n</sub>. If it succeeds, then</p>
+               </li>
+               <li>
+                  <p>create an exemplar dataset ABox<sub>n</sub> that formalises all the examples introduced in the motivating scenario according to modelet<sub>n</sub>. Then, it runs a data test and, if succeeds, then</p>
+               </li>
+               <li>
+                  <p>write formal queries SQ<sub>n</sub> as many informal competency questions related to the motivating scenario. Then, it runs a query test and, if it succeeds, then</p>
+               </li>
+               <li>
+                  <p>create a new test case T<sub>n </sub>= (MS<sub>n</sub>, CQ<sub>n</sub>, GoT<sub>n</sub>, modelet<sub>n</sub>, ABox<sub>n</sub>, SQ<sub>n</sub>) and add it in BoT.</p>
+               </li>
+            </ol>
+            <p>When running the model test, the data test and the query test, it is possible to use any appropriate available software to support the task, such as reasoners (<a href="http://clarkparsia.com/pellet">Pellet</a>, <a href="http://hermit-reasoner.com/">HermiT</a>) and query engines (<a href="http://jena.sourceforge.net/">Jena</a>, <a href="http://www.openrdf.org/">Sesame</a>).</p>
+            <p>Any failure of any test that is considered a serious issue by all the OEs results in getting back to the more recent milestone. It is worth mentioning that an exception should be also arisen if OEs think that the motivating scenario MS<sub>n</sub> is to big to be covered by one only iteration of the process. In this case, it may be necessary to re-schedule the whole iteration, for example split adequately the motivating scenario in two new ones.</p>
+         </section>
+         <section>
+            <h1>Merge the current model with the modelet</h1>
+            <p>At this stage, OEs merge modelet<sub>n</sub>, included in the new test case T<sub>n</sub>, with the current model, i.e., the version of the final model released at the end of the previous iteration (i.e., i<sub>n-1</sub>). OEs have to proceed in three consecutive steps:</p>
+            <ol>
+               <li>
+                  <p>to define a new model TBox<sub>n</sub> merging<a href="#ftn2"> </a> of the current model with modelet<sub>n</sub>. Namely, OEs must add all the axioms from the current model and modelet<sub>n</sub> to TBox<sub>n</sub> and then collapse semantically-identical entities, e.g., those that have similar local names and that represent the same entity from a semantic point of view (e.g., <em>Person</em> and <em>HumanBeing</em>);</p>
+               </li>
+               <li>
+                  <p>to update all the test cases in BoT, swapping the <em>TBox</em> of each test case with TBox<sub>n</sub> and refactoring each <em>ABox</em> and <em>SQ</em> according to the new entity names if needed, so as to refer to the more recent model;</p>
+               </li>
+               <li>
+                  <p>to run the model test, the data test and the query test on all the test cases in BoT, according to their formal requirements only;</p>
+               </li>
+               <li>
+                  <p>to set TBox<sub>n</sub> as the new current model.</p>
+               </li>
+            </ol>
+            <p>Any serious failure of any test, that means something went bad in updating the test cases in BoT, results in getting back to a previous milestone. In this case, OEs have to consider the more recent milestones, if they think there was a mistake in a procedure of this step, or, the milestones before, if the failure is demonstrably given by any of the components of the new test case T<sub>n</sub>.</p>
+         </section>
+         <section>
+            <h1>Refactor the current model</h1>
+            <p>In the last step, OEs work to refactor the current model, shared among all the test cases in BoT, and, accordingly, each <em>ABox</em> and <em>SQ</em> of each test case, if needed. In doing that task, OEs must strictly follow the following principles:</p>
+            <ul>
+               <li>
+                  <p>
+                     <strong>Reuse existing knowledge.</strong> Reusing concepts and relations defined in other models is encouraged and often labelled as a common good practice <a href="#__RefNumPara__2884_1461357291"> </a>. The reuse can result either in including external entities in the current model as they are or in providing an <em>alignment</em>
+                     <a href="#ftn15"> </a> or an <em>harmonisation</em>
+                     <a href="#ftn16"> </a> with another model.</p>
+               </li>
+               <li>
+                  <p>
+                     <strong>Document it.</strong> Adding annotations – i.e., labels (i.e., <em>rdfs:label</em>), comments (i.e., <em>rdfs:comment</em>), and provenance information (i.e., <em>rdfs:isDefinedBy</em>) – on ontological entities, so as to provide natural language descriptions of them, using at least one language (e.g., English). It is an important aspect to take into consideration, since there are several tools available, e.g., LODE <a href="#__RefNumPara__4047_1461357291"> </a>, that are able to process an ontology in source format and to produce an HTML human-readable documentation of it starting from the annotations it has specified.</p>
+               </li>
+               <li>
+                  <p>
+                     <strong>Take advantages from technologies.</strong> When possible, enriching the current model by using all the capabilities offered by the formal language in which it is developed – e.g., when using OWL 2 DL: keys, property characteristics (transitivity, symmetry, etc.), property chains, inverse properties and the like – in order to infer automatically as much information as possible starting from a (possible) small set of real data. In particular, it is important to avoid over-classifications, for instance by specifying assertions that may be automatically inferred by a reasoner – e.g., in creating an inverse property of a property <em>P</em> it is not needed to define explicitly its domain and range because they will be inferred from <em>P</em> itself.</p>
+               </li>
+            </ul>
+            <p>Finally, once the refactor is finished, OEs have to run the model test, the data test and the query test on all the test cases in BoT. This is an crucial task to perform, since it guarantees that the refactoring has not damaged any existing conceptualisation implemented in the current model.</p>
+         </section>
+         <section>
+            <h1>Output of an iteration</h1>
+            <p>Each iteration of SAMOD aims to produce a new test case that will be added to the bag of test cases (BoT). Each test case describes a particular aspect of the same model, i.e., the <em>current model</em> under consideration after one iteration of the methodology. </p>
+            <p>In addition of being integral part of the methodology process, each test case represents a complete documentation of a particular aspect of the domain described by the model, due to the natural language descriptions (the motivating scenario and the informal competency questions) it includes, as well as the formal implementation of exemplar data (the ABox) and possible ways of querying the data compliant with the model (the set of formal queries). All these additional information should help end users in understanding, with less effort, what the model is about and how they can use it to describe the particular domain it addresses.</p>
+         </section>
+      </section>
+      <section role="doc-acknowledgements">
+         <h1>Acknowledgements</h1>
+         <p>We would like to thank Jun Zhao for her precious comments and concerns about the initial drafts of SAMOD, David Shotton for our fruitful discussions when developing the SPAR Ontologies, Francesca Toni as one of the first users of such methodology, and Panos Alexopoulos as a co-author of the <a href="http://www.essepuntato.it/2013/10/vagueness">Vagueness Ontology</a> that we used herein to introduce all the examples of the SAMOD development process.</p>
+      </section>
+      <section role="doc-bibliography">
+         <h1>References</h1>
+         <ol>
+            <li id="__RefNumPara__2367_1461357291" role="doc-biblioentry">
+               <p>Beck, K. (2003). Test-driven development by example. Addison-Wesley. ISBN: 978-0321146533</p>
+            </li>
+            <li id="__RefNumPara__2434_1461357291" role="doc-biblioentry">
+               <p>Fernandez, M., Gomez-Perez, A., &amp; Juristo, N. (1997). METHONTOLOGY: from Ontological Art towards Ontological Engineering. In Proceedings of the AAAI97 Spring Symposium Series on Ontological Engineering: 33–40. <a href="http://aaaipress.org/Papers/Symposia/Spring/1997/SS-97-06/SS97-06-005.pdf">http://aaaipress.org/Papers/Symposia/Spring/1997/SS-97-06/SS97-06-005.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__2389_1461357291" role="doc-biblioentry">
+               <p>Uschold, M., &amp; Gruninger, M. (1996). Ontologies: Principles, methods and applications. IEEE Intelligent Systems, 11 (2): 93-155. <a href="http://dx.doi.org/10.1109/MIS.2002.999223">http://dx.doi.org/10.1109/MIS.2002.999223</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__2760_1461357291" role="doc-biblioentry">
+               <p>Miller, G. A. (1956). The magical number seven, plus or minus two: Some limits on our capacity for processing information. Psychological Review, 63 (2): 81–97. <a href="http://dx.doi.org/10.1037/h0043158">http://dx.doi.org/10.1037/h0043158</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__2884_1461357291" role="doc-biblioentry">
+               <p>Uschold, M., &amp; King, M. (1995). Towards a Methodology for Building Ontologies. In Workshop on Basic Ontological Issues in Knowledge Sharing. <a href="http://www.aiai.ed.ac.uk/publications/documents/1995/95-ont-ijcai95-ont-method.pdf">http://www.aiai.ed.ac.uk/publications/documents/1995/95-ont-ijcai95-ont-method.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__2550_1461357291" role="doc-biblioentry">
+               <p>Vrandecic, D., &amp; Gangemi, A. (2006). Unit Tests for Ontologies. In On the Move to Meaningful Internet Systems 2006: OTM 2006 Workshops: 1012-1020. <a href="http://dx.doi.org/10.1007/11915072_2">http://dx.doi.org/10.1007/11915072_2</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__2359_1461357291" role="doc-biblioentry">
+               <p>Atkinson, R. K., Derry, S. J., Renkl, A., &amp; Wortham, D. (2000). Learning from Examples: Instructional Principles from the Worked Examples Research. Review of Educational Research, 70 (2): 181–214. <a href="http://dx.doi.org/10.3102/00346543070002181">http://dx.doi.org/10.3102/00346543070002181</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__3275_1461357291" role="doc-biblioentry">
+               <p>Motik, B., Patel-Schneider, P. F., &amp; Parsia, B. (2009). OWL 2 Web Ontology Language Structural Specification and Functional-Style Syntax. W3C Recommendation 11 December 2012. <a href="http://www.w3.org/TR/owl2-syntax/">http://www.w3.org/TR/owl2-syntax/</a>
+               </p>
+            </li>
+            <li id="__RefNumPara__2974_1461357291" role="doc-biblioentry">
+               <p>Brockmans, S., Volz, R., Eberhart, A., Löffler, P. (2004). Visual Modeling of OWL DL Ontologies Using UML. In Proceedings of the 3<sup>rd</sup> International Semantic Web Conference (ISWC 2004): 7–11. <a href="http://dx.doi.org/10.1007/978-3-540-30475-3_15">http://dx.doi.org/10.1007/978-3-540-30475-3_15</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__3022_1461357291" role="doc-biblioentry">
+               <p>Chen, P. P. (1974). The Entity-Relationship Model: Toward a Unified View of Data. ACM Transactions on Database Systems, 1 (1): 9–36. <a href="http://dx.doi.org/10.1145/320434.320440">http://dx.doi.org/10.1145/320434.320440</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__2508_1461357291" role="doc-biblioentry">
+               <p>Garlik, S. H., Seaborne, A. (2013). SPARQL 1.1 Query Language. W3C Recommendation, 21 March 2013. <a href="http://www.w3.org/TR/sparql11-query/">http://www.w3.org/TR/sparql11-query/</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__3115_1461357291" role="doc-biblioentry">
+               <p>Falco, R., Gangemi, A., Peroni, S., Vitali, F. (2014). Modelling OWL ontologies with Graffoo. In The Semantic Web: ESWC 2014 Satellite Events: 320–325. <a href="http://dx.doi.org/10.1007/978-3-319-11955-7_42">http://dx.doi.org/10.1007/978-3-319-11955-7_42</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__8514_1461357291" role="doc-biblioentry">
+               <p>Gangemi, A., Peroni, S. (2013). DiTTO: Diagrams Transformation inTo OWL. In Proceedings of the ISWC 2013 Posters &amp; Demonstrations Track. <a href="http://ceur-ws.org/Vol-1035/iswc2013_demo_2.pdf">http://ceur-ws.org/Vol-1035/iswc2013_demo_2.pdf</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__4047_1461357291" role="doc-biblioentry">
+               <p>Peroni, S., Shotton, D., Vitali, F. (2012). The Live OWL Documentation Environment: a tool for the automatic generation of ontology documentation. In Proceedings of the 18th International Conference on Knowledge Engineering and Knowledge Management (EKAW 2012): 398–412. <a href="http://dx.doi.org/10.1007/978-3-642-33876-2_35">http://dx.doi.org/10.1007/978-3-642-33876-2_35</a> 
+               </p>
+            </li>
+            <li id="__RefNumPara__5811_1461357291" role="doc-biblioentry">
+               <p>Presutti, V., Daga, E., Gangemi, A., Blomqvist, E. (2009). eXtreme Design with Content Ontology Design Patterns. In Proceedings of the Workshop on Ontology Patterns (WOP 2009). <a href="http://ceur-ws.org/Vol-516/pap21.pdf">http://ceur-ws.org/Vol-516/pap21.pdf</a> 
+               </p>
+            </li>
+         </ol>
+      </section>
+      <section role="doc-footnotes">
+         <section id="ftn5" role="doc-footnote">
+            <p>Note that if there are no data in any example of the motivating scenario that answer to the question, it is possible that either the competency question is not relevant for the motivating scenario or the motivating scenario misses some important exemplar data. In those cases one should remove the competency question or modifying the motivating scenario accordingly.</p>
+         </section>
+         <section id="ftn6" role="doc-footnote">
+            <p>The whole documentation about the example is available at <a href="http://www.essepuntato.it/2013/10/vagueness/samod">http://www.essepuntato.it/2013/10/vagueness/samod</a>. </p>
+         </section>
+         <section id="ftn1" role="doc-footnote">
+            <p>The OEs involved in our methodology can vary in number. In the past year we have experimented with the following combination, that have all brought to good ontologies: </p>
+            <ol>
+               <li>
+                  <p>only one OE involved, who take care of implementing everything;</p>
+               </li>
+               <li>
+                  <p>more than one OE involved, who take care of the development of the ontology together, i.e., every phase of the methodology is addressed by all the OEs so as to come to shared design decision;</p>
+               </li>
+               <li>
+                  <p>an even number of OEs (either 2 or 4) split in two different groups. A first group, OE<sub>m</sub>, is responsible of developing the modelet/model; while a second group, OE<sub>d</sub>, has the role of running the model test, testing the model by creating data describing the examples in the motivating scenario (therefore understanding if the model is enough self-explanatory and complies with all the requirements collecting with domain experts), and finally running the data test and the query test. If any failure of any test is considered a serious issue, the process go back to the more recent milestone and the roles of the two OEs groups are swapped, i.e., OE<sub>m</sub> becomes OE<sub>d</sub> and vice versa.</p>
+               </li>
+            </ol>
+         </section>
+         <section id="ftn0" role="doc-footnote">
+            <p>Note that it is possible that multiple entities (i.e. classes, properties, individuals) are actually hidden behind one single definition in the glossary of terms.</p>
+         </section>
+         <section id="ftn2" role="doc-footnote">
+            <p>If i<sub>n</sub> is actually i<sub>1</sub>, then the modelet<sub>n</sub> becomes the current model since no previous model is actually available.</p>
+         </section>
+         <section id="ftn15" role="doc-footnote">
+            <p>An alignment is set of correspondences between entities belonging to two models different models.</p>
+         </section>
+         <section id="ftn16" role="doc-footnote">
+            <p>It is the process of modifying a model (and also to align it, if necessary) to fully fit or include it into another model.</p>
+         </section>
+      </section>
+   </body>
+</html>
