@@ -3,4 +3,4 @@
 # SAMOD
 *SAMOD*, the *Simplified Agile Methodology for Ontology Development*, is a novel agile methodology for the development of ontologies by means of small steps of an iterative workflow that focuses on creating well-developed and documented models starting from exemplar domain descriptions.
 
-The document describing the methodology is available in [HTML (RASH)](http://essepuntato.github.com/samod/), [PDF](https://rawgit.com/essepuntato/samod/master/samod.pdf), [LaTeX](https://rawgit.com/essepuntato/samod/master/samod.tex), and [ODT](https://rawgit.com/essepuntato/samod/master/samod.odt).
+The document describing the methodology is available in [HTML (RASH)](http://essepuntato.github.com/samod/), [PDF](https://rawgit.com/essepuntato/samod/gh-pages/samod.pdf), [LaTeX](https://rawgit.com/essepuntato/samod/gh-pages/samod.tex), and [ODT](https://rawgit.com/essepuntato/samod/gh-pages/samod.odt).
