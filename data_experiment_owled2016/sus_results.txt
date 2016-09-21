@@ -1,0 +1,67 @@
+## SUS: basic statistics ##
+	n. of SUS values: 10
+	SUS mean: 67.25
+	median: 68.75
+	max: 92.5
+	min: 40
+	s. deviation: 15.65469
+	variance: 245.0694
+---------------------------------------
+
+## Usability: basic statistics ##
+	n. of Usability values: 10
+	Usability mean: 65.625
+	median: 68.75
+	max: 90.625
+	min: 34.375
+	s. deviation: 16.40418
+	variance: 269.0972
+---------------------------------------
+
+## Learnability: basic statistics ##
+	n. of Learnability values: 10
+	Learnability mean: 73.75
+	median: 75
+	max: 100
+	min: 50
+	s. deviation: 14.96524
+	variance: 223.9583
+---------------------------------------
+[1] "Pearson with full SUS"
+
+	Pearson's product-moment correlation
+
+data:  experience$V1 and usersSUS$"SUS values"
+t = 1.581, df = 8, p-value = 0.1525
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2045366  0.8549133
+sample estimates:
+      cor 
+0.4879255 
+
+[1] "Pearson with Learnability"
+
+	Pearson's product-moment correlation
+
+data:  experience$V1 and usersLearn$Learnability
+t = 2.7205, df = 8, p-value = 0.02623
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.1128542 0.9209019
+sample estimates:
+      cor 
+0.6932229 
+
+[1] "Pearson with Usability"
+
+	Pearson's product-moment correlation
+
+data:  experience$V1 and usersUsability$Usability
+t = 1.3239, df = 8, p-value = 0.2221
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2805828  0.8315930
+sample estimates:
+      cor 
+0.4239372 
