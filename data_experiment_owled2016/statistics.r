@@ -1,5 +1,4 @@
 rm(list=ls())
-setwd("/Users/six/Dropbox/Università/PhD/Papers/2014/URSW 3/Test/")
 
 ### Functions ###
 
@@ -125,7 +124,7 @@ summarise(usersSUS, "SUS")
 summarise(usersUsability, "Usability")
 summarise(usersLearn, "Learnability")
 
-background = read.csv("prequestions.csv")
+background = read.csv("background.csv")
 attach(background)
 
 # Sub-values from questionaries

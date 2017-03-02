@@ -1,67 +1,67 @@
 ## SUS: basic statistics ##
-	n. of SUS values: 10
-	SUS mean: 67.25
-	median: 68.75
-	max: 92.5
-	min: 40
-	s. deviation: 15.65469
-	variance: 245.0694
+	n. of SUS values: 9
+	SUS mean: 53.61111
+	median: 52.5
+	max: 82.5
+	min: 32.5
+	s. deviation: 19.57003
+	variance: 382.9861
 ---------------------------------------
 
 ## Usability: basic statistics ##
-	n. of Usability values: 10
-	Usability mean: 65.625
-	median: 68.75
-	max: 90.625
+	n. of Usability values: 9
+	Usability mean: 57.63889
+	median: 59.375
+	max: 78.125
 	min: 34.375
-	s. deviation: 16.40418
-	variance: 269.0972
+	s. deviation: 16.69106
+	variance: 278.5916
 ---------------------------------------
 
 ## Learnability: basic statistics ##
-	n. of Learnability values: 10
-	Learnability mean: 73.75
-	median: 75
+	n. of Learnability values: 9
+	Learnability mean: 37.5
+	median: 25
 	max: 100
-	min: 50
-	s. deviation: 14.96524
-	variance: 223.9583
+	min: 0
+	s. deviation: 34.23266
+	variance: 1171.875
 ---------------------------------------
 [1] "Pearson with full SUS"
 
 	Pearson's product-moment correlation
 
 data:  experience$V1 and usersSUS$"SUS values"
-t = 1.581, df = 8, p-value = 0.1525
+t = 1.2718, df = 7, p-value = 0.2441
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- -0.2045366  0.8549133
+ -0.3241378  0.8521741
 sample estimates:
       cor 
-0.4879255 
+0.4332479 
 
 [1] "Pearson with Learnability"
 
 	Pearson's product-moment correlation
 
 data:  experience$V1 and usersLearn$Learnability
-t = 2.7205, df = 8, p-value = 0.02623
+t = 2.0772, df = 7, p-value = 0.0764
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.1128542 0.9209019
+ -0.07897672  0.90890001
 sample estimates:
       cor 
-0.6932229 
+0.6175348 
 
 [1] "Pearson with Usability"
 
 	Pearson's product-moment correlation
 
 data:  experience$V1 and usersUsability$Usability
-t = 1.3239, df = 8, p-value = 0.2221
+t = 0.8885, df = 7, p-value = 0.4038
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- -0.2805828  0.8315930
+ -0.4384875  0.8110012
 sample estimates:
       cor 
-0.4239372 
+0.3183367 

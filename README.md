@@ -1,4 +1,4 @@
-**Paper to cite in scholarly works:** Peroni, S. (2016). A Simplified Agile Methodology for Ontology Development. In Proceedings of [the 13th OWL: Experiences and Directions Workshop and 5th OWL reasoner evaluation workshop (OWLED-ORE 2016)](https://www.w3.org/community/owled/workshop-2016/). https://w3id.org/people/essepuntato/papers/samod-owled2016.html
+**Paper to cite in scholarly works:** Peroni, S. (2017). A Simplified Agile Methodology for Ontology Development. In Proceedings of [the 13th OWL: Experiences and Directions Workshop and 5th OWL reasoner evaluation workshop (OWLED-ORE 2016)](https://www.w3.org/community/owled/workshop-2016/). DOI: [10.1007/978-3-319-54627-8_5](http://dx.doi.org/10.1007/978-3-319-54627-8_5). https://w3id.org/people/essepuntato/papers/samod-owled2016.html
 
 **Methodology document:** Peroni, S. (2016). SAMOD: an agile methodology for the development of ontologies. figshare. http://dx.doi.org/10.6084/m9.figshare.3189769
 
